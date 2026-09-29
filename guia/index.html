@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>n8n-maker — 7 skills de n8n para o Claude Code</title>
-<meta name="description" content="Sete skills que ensinam o Claude Code a desenhar, configurar, validar e depurar workflows do n8n: padrões, configuração de nodes, expressões, Code node em JS/Python, erros de validação e as ferramentas do MCP n8n-mcp.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<meta content="Sete skills que ensinam o Claude Code a desenhar, configurar, validar e depurar workflows do n8n: padrões, configuração de nodes, expressões, Code node em JS/Python, erros de validação e as ferramentas do MCP n8n-mcp." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
 <style>
   :root{
     --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
@@ -92,199 +93,181 @@
   footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
   .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
 </style>
-</head>
-<body>
-
+<link href="https://inematds.github.io/n8n-maker/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/n8n-maker/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/n8n-maker/guia/es/" hreflang="es" rel="alternate"/></head>
+<body><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="./" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="en/" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="es/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <nav><div class="wrap">
-  <a class="brand" href="#top"><span class="emoji">🔗</span> n8n-maker</a>
-  <span class="sep">|</span>
-  <span class="clubpro">
-    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
-    <span class="sep">-</span>
-    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
-  </span>
-  <div class="links">
-    <a class="sec" href="#oque">O que é</a>
-    <a class="sec" href="#fluxo">Como funciona</a>
-    <a class="sec" href="#skills">As 7 skills</a>
-    <a class="sec" href="#guia">Guia de uso</a>
-    <a class="sec" href="#exemplos">Exemplos</a>
-    <a class="sec" href="#roadmap">Roadmap</a>
-    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
-    <a class="btn" href="https://github.com/inematds/n8n-maker" target="_blank" rel="noopener">GitHub</a>
-  </div>
+<a class="brand" href="#top"><span class="emoji">🔗</span> n8n-maker</a>
+<span class="sep">|</span>
+<span class="clubpro">
+<a class="inema" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="sep">-</span>
+<a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</span>
+<div class="links">
+<a class="sec" href="#oque">O que é</a>
+<a class="sec" href="#fluxo">Como funciona</a>
+<a class="sec" href="#skills">As 7 skills</a>
+<a class="sec" href="#guia">Guia de uso</a>
+<a class="sec" href="#exemplos">Exemplos</a>
+<a class="sec" href="#roadmap">Roadmap</a>
+<button aria-label="Alternar tema" class="tgl" id="themeToggle" title="Alternar tema">🌙</button>
+<a class="btn" href="https://github.com/inematds/n8n-maker" rel="noopener" target="_blank">GitHub</a>
+</div>
 </div></nav>
-
 <header class="hero" id="top">
-  <div class="glow"></div>
-  <div class="wrap">
-    <div>
-      <span class="chip">Skills · Automação · n8n</span>
-      <h1>Seu Claude Code virou <span class="amb">especialista em n8n</span></h1>
-      <p class="lead">Sete skills que carregam sozinhas e cobrem o ciclo inteiro: desenhar o workflow, configurar os nodes, escrever as expressões e resolver os erros de validação.</p>
-      <div class="cta">
-        <a class="btn" href="#guia">Começar o guia</a>
-        <a class="btn ghost" href="https://github.com/inematds/n8n-maker" target="_blank" rel="noopener">Ver no GitHub</a>
-      </div>
-    </div>
-    <figure><img src="assets/hero.png" alt="Capa do projeto n8n-maker"></figure>
-  </div>
+<div class="glow"></div>
+<div class="wrap">
+<div>
+<span class="chip">Skills · Automação · n8n</span>
+<h1>Seu Claude Code virou <span class="amb">especialista em n8n</span></h1>
+<p class="lead">Sete skills que carregam sozinhas e cobrem o ciclo inteiro: desenhar o workflow, configurar os nodes, escrever as expressões e resolver os erros de validação.</p>
+<div class="cta">
+<a class="btn" href="#guia">Começar o guia</a>
+<a class="btn ghost" href="https://github.com/inematds/n8n-maker" rel="noopener" target="_blank">Ver no GitHub</a>
+</div>
+</div>
+<figure><img alt="Capa do projeto n8n-maker" src="assets/hero.png"/></figure>
+</div>
 </header>
-
 <section id="oque"><div class="wrap">
-  <span class="chip">O que é</span>
-  <h2>Conhecimento de n8n empacotado como skill</h2>
-  <p class="sub">Cada skill é uma pasta com um <code>SKILL.md</code> e arquivos de referência. O Claude Code lê a descrição, decide sozinho quando o assunto é aquele, e só então puxa o detalhe que precisa — o contexto fica leve.</p>
-  <div class="grid g3">
-    <div class="card"><h3>🎯 Dispara sozinha</h3><p>Você não invoca nada à mão. Falou em webhook, expressão <code>{{ }}</code> ou erro de validação, a skill certa entra.</p></div>
-    <div class="card"><h3>📚 Carregamento em camadas</h3><p>O <code>SKILL.md</code> é curto; catálogos de erro, padrões e referências de API só entram no contexto quando o caso pede.</p></div>
-    <div class="card"><h3>🔌 Casa com o MCP n8n-mcp</h3><p>Com o servidor n8n-mcp conectado, dá pra buscar nodes, validar config e publicar workflow. Sem ele, as outras seis seguem valendo.</p></div>
-  </div>
+<span class="chip">O que é</span>
+<h2>Conhecimento de n8n empacotado como skill</h2>
+<p class="sub">Cada skill é uma pasta com um <code>SKILL.md</code> e arquivos de referência. O Claude Code lê a descrição, decide sozinho quando o assunto é aquele, e só então puxa o detalhe que precisa — o contexto fica leve.</p>
+<div class="grid g3">
+<div class="card"><h3>🎯 Dispara sozinha</h3><p>Você não invoca nada à mão. Falou em webhook, expressão <code>{{ }}</code> ou erro de validação, a skill certa entra.</p></div>
+<div class="card"><h3>📚 Carregamento em camadas</h3><p>O <code>SKILL.md</code> é curto; catálogos de erro, padrões e referências de API só entram no contexto quando o caso pede.</p></div>
+<div class="card"><h3>🔌 Casa com o MCP n8n-mcp</h3><p>Com o servidor n8n-mcp conectado, dá pra buscar nodes, validar config e publicar workflow. Sem ele, as outras seis seguem valendo.</p></div>
+</div>
 </div></section>
-
 <section id="fluxo"><div class="wrap">
-  <span class="chip">Como funciona</span>
-  <h2>Do desenho ao workflow publicado</h2>
-  <p class="sub">A ordem em que as skills entram numa construção típica. O laço entre validar e corrigir costuma dar 2–3 voltas — é o normal, não é sinal de que algo deu errado.</p>
-  <div class="flow">
-    <span>Desenhar</span><span class="arr">→</span>
-    <span>Configurar nodes</span><span class="arr">→</span>
-    <span>Expressões &amp; Code</span><span class="arr">→</span>
-    <span>Validar</span><span class="arr">→</span>
-    <span>Corrigir</span><span class="arr">↺</span>
-    <span>Publicar via MCP</span>
-  </div>
-  <div class="grid g3" style="margin-top:26px">
-    <div class="card"><span class="num">1</span><h3>Arquitetura</h3><p><strong>n8n-workflow-patterns</strong> escolhe o padrão: webhook, API HTTP, banco, AI agent ou agendado.</p></div>
-    <div class="card"><span class="num">2</span><h3>Construção</h3><p><strong>node-configuration</strong>, <strong>expression-syntax</strong> e os dois <strong>code-*</strong> preenchem os nodes.</p></div>
-    <div class="card"><span class="num">3</span><h3>Fechamento</h3><p><strong>validation-expert</strong> lê os erros; <strong>mcp-tools-expert</strong> valida e publica no n8n.</p></div>
-  </div>
+<span class="chip">Como funciona</span>
+<h2>Do desenho ao workflow publicado</h2>
+<p class="sub">A ordem em que as skills entram numa construção típica. O laço entre validar e corrigir costuma dar 2–3 voltas — é o normal, não é sinal de que algo deu errado.</p>
+<div class="flow">
+<span>Desenhar</span><span class="arr">→</span>
+<span>Configurar nodes</span><span class="arr">→</span>
+<span>Expressões &amp; Code</span><span class="arr">→</span>
+<span>Validar</span><span class="arr">→</span>
+<span>Corrigir</span><span class="arr">↺</span>
+<span>Publicar via MCP</span>
+</div>
+<div class="grid g3" style="margin-top:26px">
+<div class="card"><span class="num">1</span><h3>Arquitetura</h3><p><strong>n8n-workflow-patterns</strong> escolhe o padrão: webhook, API HTTP, banco, AI agent ou agendado.</p></div>
+<div class="card"><span class="num">2</span><h3>Construção</h3><p><strong>node-configuration</strong>, <strong>expression-syntax</strong> e os dois <strong>code-*</strong> preenchem os nodes.</p></div>
+<div class="card"><span class="num">3</span><h3>Fechamento</h3><p><strong>validation-expert</strong> lê os erros; <strong>mcp-tools-expert</strong> valida e publica no n8n.</p></div>
+</div>
 </div></section>
-
 <section id="skills"><div class="wrap">
-  <span class="chip">As 7 skills</span>
-  <h2>O que cada uma cobre</h2>
-  <p class="sub">Todas ficam em <code>skills/</code> no repositório, com symlinks em <code>.claude/skills/</code> — que é de onde o Claude Code carrega.</p>
-  <div class="grid g2">
-    <div class="card"><h3>🧩 n8n-workflow-patterns</h3><p>Os cinco padrões arquiteturais comprovados: processamento de webhook, integração HTTP/API, operações de banco, workflow de AI agent e tarefas agendadas.</p><p class="mut"><em>Dispara ao desenhar ou estruturar um workflow novo.</em></p></div>
-    <div class="card"><h3>⚙️ n8n-node-configuration</h3><p>Configuração ciente da operação: campos obrigatórios, dependências entre propriedades e qual nível de detalhe pedir no <code>get_node</code>.</p><p class="mut"><em>Dispara ao configurar um node específico.</em></p></div>
-    <div class="card"><h3>🔤 n8n-expression-syntax</h3><p>Sintaxe <code>{{ }}</code>, variáveis <code>$json</code> e <code>$node</code>, dados vindos de webhook e o catálogo de erros clássicos.</p><p class="mut"><em>Dispara ao escrever ou corrigir expressões.</em></p></div>
-    <div class="card"><h3>🟨 n8n-code-javascript</h3><p>Code node em JavaScript: <code>$input</code>/<code>$json</code>/<code>$node</code>, <code>$helpers.httpRequest</code>, datas com <code>DateTime</code> e a escolha entre os modos do node.</p><p class="mut"><em>O caminho recomendado para ~95% dos casos.</em></p></div>
-    <div class="card"><h3>🐍 n8n-code-python</h3><p>Code node em Python (beta): <code>_input</code>/<code>_json</code>, o que dá pra usar da biblioteca padrão e as limitações reais frente ao JS.</p><p class="mut"><em>Só quando Python for mesmo necessário.</em></p></div>
-    <div class="card"><h3>✅ n8n-validation-expert</h3><p>Interpretar e resolver erros de validação: catálogo de erros, perfis de validação, estrutura de operadores e como reconhecer falsos positivos.</p><p class="mut"><em>Dispara quando um <code>validate_*</code> reclama.</em></p></div>
-    <div class="card"><h3>🛠️ n8n-mcp-tools-expert</h3><p>Uso eficiente das ferramentas do MCP n8n-mcp: descoberta de nodes, validação de configuração, gestão de workflows e a biblioteca de ~2.700 templates reais.</p><p class="mut"><em>Requer o servidor n8n-mcp conectado.</em></p></div>
-    <div class="card"><h3>📁 Como estão organizadas</h3><p>Uma pasta por skill, com <code>SKILL.md</code> mais os anexos: <code>ERROR_CATALOG.md</code>, <code>COMMON_PATTERNS.md</code>, <code>DATA_ACCESS.md</code>, <code>FALSE_POSITIVES.md</code>, <code>DEPENDENCIES.md</code> e afins.</p></div>
-  </div>
+<span class="chip">As 7 skills</span>
+<h2>O que cada uma cobre</h2>
+<p class="sub">Todas ficam em <code>skills/</code> no repositório, com symlinks em <code>.claude/skills/</code> — que é de onde o Claude Code carrega.</p>
+<div class="grid g2">
+<div class="card"><h3>🧩 n8n-workflow-patterns</h3><p>Os cinco padrões arquiteturais comprovados: processamento de webhook, integração HTTP/API, operações de banco, workflow de AI agent e tarefas agendadas.</p><p class="mut"><em>Dispara ao desenhar ou estruturar um workflow novo.</em></p></div>
+<div class="card"><h3>⚙️ n8n-node-configuration</h3><p>Configuração ciente da operação: campos obrigatórios, dependências entre propriedades e qual nível de detalhe pedir no <code>get_node</code>.</p><p class="mut"><em>Dispara ao configurar um node específico.</em></p></div>
+<div class="card"><h3>🔤 n8n-expression-syntax</h3><p>Sintaxe <code>{{ }}</code>, variáveis <code>$json</code> e <code>$node</code>, dados vindos de webhook e o catálogo de erros clássicos.</p><p class="mut"><em>Dispara ao escrever ou corrigir expressões.</em></p></div>
+<div class="card"><h3>🟨 n8n-code-javascript</h3><p>Code node em JavaScript: <code>$input</code>/<code>$json</code>/<code>$node</code>, <code>$helpers.httpRequest</code>, datas com <code>DateTime</code> e a escolha entre os modos do node.</p><p class="mut"><em>O caminho recomendado para ~95% dos casos.</em></p></div>
+<div class="card"><h3>🐍 n8n-code-python</h3><p>Code node em Python (beta): <code>_input</code>/<code>_json</code>, o que dá pra usar da biblioteca padrão e as limitações reais frente ao JS.</p><p class="mut"><em>Só quando Python for mesmo necessário.</em></p></div>
+<div class="card"><h3>✅ n8n-validation-expert</h3><p>Interpretar e resolver erros de validação: catálogo de erros, perfis de validação, estrutura de operadores e como reconhecer falsos positivos.</p><p class="mut"><em>Dispara quando um <code>validate_*</code> reclama.</em></p></div>
+<div class="card"><h3>🛠️ n8n-mcp-tools-expert</h3><p>Uso eficiente das ferramentas do MCP n8n-mcp: descoberta de nodes, validação de configuração, gestão de workflows e a biblioteca de ~2.700 templates reais.</p><p class="mut"><em>Requer o servidor n8n-mcp conectado.</em></p></div>
+<div class="card"><h3>📁 Como estão organizadas</h3><p>Uma pasta por skill, com <code>SKILL.md</code> mais os anexos: <code>ERROR_CATALOG.md</code>, <code>COMMON_PATTERNS.md</code>, <code>DATA_ACCESS.md</code>, <code>FALSE_POSITIVES.md</code>, <code>DEPENDENCIES.md</code> e afins.</p></div>
+</div>
 </div></section>
-
 <section id="pre"><div class="wrap">
-  <span class="chip">Pré-requisitos</span>
-  <h2>O que você precisa antes de começar</h2>
-  <p class="sub">O básico é só o Claude Code e o repositório clonado. O MCP e a instância n8n são opcionais — sem eles você perde a publicação automática, não o conhecimento.</p>
-  <div class="grid g3">
-    <div class="card"><h3>Claude Code</h3><p>As skills usam o mecanismo nativo de skills de projeto (<code>.claude/skills/</code>).</p><pre><span class="c"># versão instalada</span>
+<span class="chip">Pré-requisitos</span>
+<h2>O que você precisa antes de começar</h2>
+<p class="sub">O básico é só o Claude Code e o repositório clonado. O MCP e a instância n8n são opcionais — sem eles você perde a publicação automática, não o conhecimento.</p>
+<div class="grid g3">
+<div class="card"><h3>Claude Code</h3><p>As skills usam o mecanismo nativo de skills de projeto (<code>.claude/skills/</code>).</p><pre><span class="c"># versão instalada</span>
 <span class="k">claude --version</span></pre></div>
-    <div class="card"><h3>O repositório</h3><p>Clone e abra o Claude Code de dentro da pasta — skills de projeto valem só ali.</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/n8n-maker</span>
+<div class="card"><h3>O repositório</h3><p>Clone e abra o Claude Code de dentro da pasta — skills de projeto valem só ali.</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/n8n-maker</span>
 <span class="k">cd</span> n8n-maker &amp;&amp; <span class="k">claude</span></pre></div>
-    <div class="card"><h3>MCP n8n-mcp <span class="mut">(opcional)</span></h3><p>Só necessário para a skill <code>n8n-mcp-tools-expert</code> buscar nodes e publicar workflows.</p><pre><span class="c"># conferir os MCPs conectados</span>
+<div class="card"><h3>MCP n8n-mcp <span class="mut">(opcional)</span></h3><p>Só necessário para a skill <code>n8n-mcp-tools-expert</code> buscar nodes e publicar workflows.</p><pre><span class="c"># conferir os MCPs conectados</span>
 <span class="k">claude mcp list</span></pre></div>
-  </div>
+</div>
 </div></section>
-
 <section id="guia"><div class="wrap">
-  <span class="chip">Guia de uso · passo a passo</span>
-  <h2>Do clone ao primeiro workflow</h2>
-  <p class="sub">Comandos reais. O ponto principal é o passo 3: você descreve o que quer em português e as skills entram sozinhas.</p>
-
-  <div class="step"><div class="b">1</div><div>
-    <h3>Clone o repositório</h3>
-    <p>As skills viajam junto com o repo — nada para instalar além disso.</p>
+<span class="chip">Guia de uso · passo a passo</span>
+<h2>Do clone ao primeiro workflow</h2>
+<p class="sub">Comandos reais. O ponto principal é o passo 3: você descreve o que quer em português e as skills entram sozinhas.</p>
+<div class="step"><div class="b">1</div><div>
+<h3>Clone o repositório</h3>
+<p>As skills viajam junto com o repo — nada para instalar além disso.</p>
 <pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/n8n-maker</span>
 <span class="k">cd</span> n8n-maker</pre>
-  </div></div>
-
-  <div class="step"><div class="b">2</div><div>
-    <h3>Abra o Claude Code dentro da pasta</h3>
-    <p>Skills em <code>.claude/skills/</code> são de projeto: só carregam quando a sessão roda ali dentro.</p>
+</div></div>
+<div class="step"><div class="b">2</div><div>
+<h3>Abra o Claude Code dentro da pasta</h3>
+<p>Skills em <code>.claude/skills/</code> são de projeto: só carregam quando a sessão roda ali dentro.</p>
 <pre><span class="k">claude</span>  <span class="c"># de dentro de ~/projetos/n8n-maker</span>
 <span class="c"># confira que apareceram: /skills → n8n-*</span></pre>
-  </div></div>
-
-  <div class="step"><div class="b">3</div><div>
-    <h3>Peça o workflow em português</h3>
-    <p>Não invoque skill nenhuma. Descreva o objetivo; o Claude escolhe o padrão e monta a estrutura.</p>
+</div></div>
+<div class="step"><div class="b">3</div><div>
+<h3>Peça o workflow em português</h3>
+<p>Não invoque skill nenhuma. Descreva o objetivo; o Claude escolhe o padrão e monta a estrutura.</p>
 <pre><span class="c"># exemplo de pedido</span>
 <span class="s">"monta um workflow que recebe um webhook,
  valida o payload e grava no Postgres"</span>
 
 <span class="c"># → n8n-workflow-patterns entra com o padrão de webhook</span>
 <span class="c"># → n8n-node-configuration configura Webhook, IF e Postgres</span></pre>
-  </div></div>
-
-  <div class="step"><div class="b">4</div><div>
-    <h3>Refine expressões e Code nodes</h3>
-    <p>Ao mexer em campo dinâmico ou Code node, as skills de sintaxe e de código assumem.</p>
+</div></div>
+<div class="step"><div class="b">4</div><div>
+<h3>Refine expressões e Code nodes</h3>
+<p>Ao mexer em campo dinâmico ou Code node, as skills de sintaxe e de código assumem.</p>
 <pre><span class="c"># expressão em campo do node</span>
 {{ $json.body.email }}
 
 <span class="c"># Code node (JavaScript)</span>
 <span class="k">const</span> items = $input.all();
 <span class="k">return</span> items.map(i =&gt; ({ json: { email: i.json.body.email } }));</pre>
-  </div></div>
-
-  <div class="step"><div class="b">5</div><div>
-    <h3>Valide e corrija no laço</h3>
-    <p>Espere 2–3 voltas. A <code>n8n-validation-expert</code> traduz a mensagem, aponta a causa e separa erro real de falso positivo.</p>
+</div></div>
+<div class="step"><div class="b">5</div><div>
+<h3>Valide e corrija no laço</h3>
+<p>Espere 2–3 voltas. A <code>n8n-validation-expert</code> traduz a mensagem, aponta a causa e separa erro real de falso positivo.</p>
 <pre><span class="c"># pedido típico</span>
 <span class="s">"valida esse workflow e corrige o que aparecer"</span>
 
 <span class="c"># → erros reais: corrigidos</span>
 <span class="c"># → falsos positivos: explicados e ignorados</span></pre>
-  </div></div>
-
-  <div class="step"><div class="b">6</div><div>
-    <h3>Publique na sua instância <span class="mut">(opcional)</span></h3>
-    <p>Com o MCP n8n-mcp conectado, a <code>n8n-mcp-tools-expert</code> cria e atualiza o workflow direto no n8n.</p>
+</div></div>
+<div class="step"><div class="b">6</div><div>
+<h3>Publique na sua instância <span class="mut">(opcional)</span></h3>
+<p>Com o MCP n8n-mcp conectado, a <code>n8n-mcp-tools-expert</code> cria e atualiza o workflow direto no n8n.</p>
 <pre><span class="s">"sobe esse workflow na minha instância do n8n"</span></pre>
-  </div></div>
-
-  <div class="step"><div class="b">7</div><div>
-    <h3>Quer usar em qualquer projeto?</h3>
-    <p>Faça symlink das pastas para o diretório global de skills — assim continuam versionadas aqui.</p>
+</div></div>
+<div class="step"><div class="b">7</div><div>
+<h3>Quer usar em qualquer projeto?</h3>
+<p>Faça symlink das pastas para o diretório global de skills — assim continuam versionadas aqui.</p>
 <pre><span class="k">ln -s</span> ~/projetos/n8n-maker/skills/n8n-* ~/.claude/skills/</pre>
-  </div></div>
+</div></div>
 </div></section>
-
 <section id="exemplos"><div class="wrap">
-  <span class="chip">Exemplos</span>
-  <h2>Pedidos que acionam cada skill</h2>
-  <p class="sub">Como o roteamento acontece na prática — você fala normal, a skill certa aparece.</p>
-  <div class="grid g2">
-    <div class="card"><h3>“Recebo um webhook do Stripe e quero avisar no Slack”</h3><p><strong>workflow-patterns</strong> (padrão de webhook) → <strong>node-configuration</strong> (Webhook + Slack) → <strong>expression-syntax</strong> (montar a mensagem).</p></div>
-    <div class="card"><h3>“Esse <code>$json</code> está vindo undefined”</h3><p><strong>expression-syntax</strong> mostra o acesso correto ao item e a diferença entre <code>$json</code>, <code>$node</code> e dados de webhook.</p></div>
-    <div class="card"><h3>“Preciso chamar uma API paginada dentro de um Code node”</h3><p><strong>code-javascript</strong> com <code>$helpers.httpRequest</code> e o laço de paginação; <strong>workflow-patterns</strong> se virar um fluxo próprio.</p></div>
-    <div class="card"><h3>“A validação reclamou da estrutura do operador do IF”</h3><p><strong>validation-expert</strong> localiza no catálogo de erros, corrige a estrutura e diz se é caso de falso positivo.</p></div>
-  </div>
+<span class="chip">Exemplos</span>
+<h2>Pedidos que acionam cada skill</h2>
+<p class="sub">Como o roteamento acontece na prática — você fala normal, a skill certa aparece.</p>
+<div class="grid g2">
+<div class="card"><h3>“Recebo um webhook do Stripe e quero avisar no Slack”</h3><p><strong>workflow-patterns</strong> (padrão de webhook) → <strong>node-configuration</strong> (Webhook + Slack) → <strong>expression-syntax</strong> (montar a mensagem).</p></div>
+<div class="card"><h3>“Esse <code>$json</code> está vindo undefined”</h3><p><strong>expression-syntax</strong> mostra o acesso correto ao item e a diferença entre <code>$json</code>, <code>$node</code> e dados de webhook.</p></div>
+<div class="card"><h3>“Preciso chamar uma API paginada dentro de um Code node”</h3><p><strong>code-javascript</strong> com <code>$helpers.httpRequest</code> e o laço de paginação; <strong>workflow-patterns</strong> se virar um fluxo próprio.</p></div>
+<div class="card"><h3>“A validação reclamou da estrutura do operador do IF”</h3><p><strong>validation-expert</strong> localiza no catálogo de erros, corrige a estrutura e diz se é caso de falso positivo.</p></div>
+</div>
 </div></section>
-
 <section id="roadmap"><div class="wrap">
-  <span class="chip">Roadmap</span>
-  <h2>Onde está e para onde vai</h2>
-  <p class="sub">O repositório nasceu de skills que já rodavam no perfil global; o próximo passo é ganhar exemplos executáveis e ficar mais fácil de instalar.</p>
-  <div class="phase"><div class="tag">Feito</div><div class="d"><strong>As 7 skills versionadas</strong><span>Saíram de <code>~/.claude/skills/</code> e viraram projeto: conteúdo em <code>skills/</code>, symlinks em <code>.claude/skills/</code>, README e este guia.</span></div></div>
-  <div class="phase"><div class="tag">Próximo</div><div class="d"><strong>Workflows de exemplo</strong><span>JSONs prontos por padrão (webhook, API, banco, AI agent, agendado) para importar direto no n8n e usar como ponto de partida.</span></div></div>
-  <div class="phase"><div class="tag">Depois</div><div class="d"><strong>Instalação em um comando</strong><span>Script que faz o symlink para o perfil global e checa se o MCP n8n-mcp está conectado.</span></div></div>
+<span class="chip">Roadmap</span>
+<h2>Onde está e para onde vai</h2>
+<p class="sub">O repositório nasceu de skills que já rodavam no perfil global; o próximo passo é ganhar exemplos executáveis e ficar mais fácil de instalar.</p>
+<div class="phase"><div class="tag">Feito</div><div class="d"><strong>As 7 skills versionadas</strong><span>Saíram de <code>~/.claude/skills/</code> e viraram projeto: conteúdo em <code>skills/</code>, symlinks em <code>.claude/skills/</code>, README e este guia.</span></div></div>
+<div class="phase"><div class="tag">Próximo</div><div class="d"><strong>Workflows de exemplo</strong><span>JSONs prontos por padrão (webhook, API, banco, AI agent, agendado) para importar direto no n8n e usar como ponto de partida.</span></div></div>
+<div class="phase"><div class="tag">Depois</div><div class="d"><strong>Instalação em um comando</strong><span>Script que faz o symlink para o perfil global e checa se o MCP n8n-mcp está conectado.</span></div></div>
 </div></section>
-
 <footer>
-  <div class="wrap">
-    <div class="pill">Claude Code Skills</div><div class="pill">n8n</div><div class="pill">MCP n8n-mcp</div><div class="pill">Markdown</div>
-    <p style="margin-top:18px">n8n-maker · skills de n8n para o Claude Code ·
+<div class="wrap">
+<div class="pill">Claude Code Skills</div><div class="pill">n8n</div><div class="pill">MCP n8n-mcp</div><div class="pill">Markdown</div>
+<p style="margin-top:18px">n8n-maker · skills de n8n para o Claude Code ·
       <a href="https://github.com/inematds/n8n-maker">inematds/n8n-maker</a> ·
       <a href="https://inema.club">INEMA.CLUB</a></p>
-  </div>
+</div>
 </footer>
-
 <script>
   (function(){
     var KEY='n8n-maker-theme';

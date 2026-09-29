@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>n8n-maker — 7 n8n skills for Claude Code</title>
+<meta content="Seven skills that teach Claude Code to design, configure, validate, and debug n8n workflows: patterns, node configuration, expressions, Code node in JS/Python, validation errors, and the n8n-mcp MCP tools." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#E2A23B; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#b9791d; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:760px){nav .links a.sec{display:none}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(226,162,59,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .card p + p{margin-top:.6em}
+  .card code{color:var(--amb);font-size:.82rem}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(226,162,59,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px 1fr;gap:16px;margin-bottom:26px}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+<link href="https://inematds.github.io/n8n-maker/guia/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/n8n-maker/guia/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/n8n-maker/guia/es/" hreflang="es" rel="alternate"/></head>
+<body><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../es/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav><div class="wrap">
+<a class="brand" href="#top"><span class="emoji">🔗</span> n8n-maker</a>
+<span class="sep">|</span>
+<span class="clubpro">
+<a class="inema" href="https://inema.club" rel="noopener" target="_blank">INEMA.CLUB</a>
+<span class="sep">-</span>
+<a class="pro" href="https://inema.pro" rel="noopener" target="_blank">PRO</a>
+</span>
+<div class="links">
+<a class="sec" href="#oque">What it is</a>
+<a class="sec" href="#fluxo">How it works</a>
+<a class="sec" href="#skills">The 7 skills</a>
+<a class="sec" href="#guia">User guide</a>
+<a class="sec" href="#exemplos">Examples</a>
+<a class="sec" href="#roadmap">Roadmap</a>
+<button aria-label="Switch theme" class="tgl" id="themeToggle" title="Switch theme">🌙</button>
+<a class="btn" href="https://github.com/inematds/n8n-maker" rel="noopener" target="_blank">GitHub</a>
+</div>
+</div></nav>
+<header class="hero" id="top">
+<div class="glow"></div>
+<div class="wrap">
+<div>
+<span class="chip">Skills · Automation · n8n</span>
+<h1>Your Claude Code became <span class="amb">n8n specialist</span></h1>
+<p class="lead">Seven skills that load automatically and cover the entire cycle: designing the workflow, configuring nodes, writing expressions, and resolving validation errors.</p>
+<div class="cta">
+<a class="btn" href="#guia">Start the guide</a>
+<a class="btn ghost" href="https://github.com/inematds/n8n-maker" rel="noopener" target="_blank">View on GitHub</a>
+</div>
+</div>
+<figure><img alt="n8n-maker project cover" src="../assets/hero.png"/></figure>
+</div>
+</header>
+<section id="oque"><div class="wrap">
+<span class="chip">What it is</span>
+<h2>n8n knowledge packaged as a skill</h2>
+<p class="sub">Each skill is a folder with a <code>SKILL.md</code> and reference files. Claude Code reads the description, decides on its own when the topic is relevant, and only then loads the details it needs — keeping the context lightweight.</p>
+<div class="grid g3">
+<div class="card"><h3>🎯 Triggers automatically</h3><p>You don’t invoke anything manually. Mention a webhook, expression <code>{{ }}</code> or a validation error, the right skill kicks in.</p></div>
+<div class="card"><h3>📚 Layered loading</h3><p>O <code>SKILL.md</code> is short; error catalogs, patterns, and API references only enter the context when the case calls for them.</p></div>
+<div class="card"><h3>🔌 Works with the n8n-mcp MCP</h3><p>With the n8n-mcp server connected, you can search for nodes, validate configs, and publish workflows. Without it, the other six still apply.</p></div>
+</div>
+</div></section>
+<section id="fluxo"><div class="wrap">
+<span class="chip">How it works</span>
+<h2>From design to published workflow</h2>
+<p class="sub">The order in which the skills come into play in a typical build. The loop between validating and fixing usually takes 2–3 rounds—that's normal and doesn't mean anything went wrong.</p>
+<div class="flow">
+<span>Design</span><span class="arr">→</span>
+<span>Configure nodes</span><span class="arr">→</span>
+<span>Expressions &amp; Code</span><span class="arr">→</span>
+<span>Validate</span><span class="arr">→</span>
+<span>Fix</span><span class="arr">↺</span>
+<span>Publish via MCP</span>
+</div>
+<div class="grid g3" style="margin-top:26px">
+<div class="card"><span class="num">1</span><h3>Architecture</h3><p><strong>n8n-workflow-patterns</strong> choose the pattern: webhook, HTTP API, database, AI agent, or scheduled.</p></div>
+<div class="card"><span class="num">2</span><h3>Build</h3><p><strong>node-configuration</strong>, <strong>expression-syntax</strong> and both <strong>code-*</strong> fill in the nodes.</p></div>
+<div class="card"><span class="num">3</span><h3>Wrap-up</h3><p><strong>validation-expert</strong> reads the errors; <strong>mcp-tools-expert</strong> validates and publishes to n8n.</p></div>
+</div>
+</div></section>
+<section id="skills"><div class="wrap">
+<span class="chip">The 7 skills</span>
+<h2>What each one covers</h2>
+<p class="sub">They’re all in <code>skills/</code> in the repository, with symlinks in <code>.claude/skills/</code> — which is where Claude Code loads from.</p>
+<div class="grid g2">
+<div class="card"><h3>🧩 n8n-workflow-patterns</h3><p>The five proven architectural patterns: webhook processing, HTTP/API integration, database operations, AI agent workflow, and scheduled tasks.</p><p class="mut"><em>Triggers when designing or structuring a new workflow.</em></p></div>
+<div class="card"><h3>⚙️ n8n-node-configuration</h3><p>Operation-aware configuration: required fields, dependencies between properties, and how much detail to request in the <code>get_node</code>.</p><p class="mut"><em>Triggers when configuring a specific node.</em></p></div>
+<div class="card"><h3>🔤 n8n-expression-syntax</h3><p>Syntax <code>{{ }}</code>, variables <code>$json</code> e <code>$node</code>, data from a webhook, and the catalog of classic errors.</p><p class="mut"><em>Triggers when writing or fixing expressions.</em></p></div>
+<div class="card"><h3>🟨 n8n-code-javascript</h3><p>JavaScript Code node: <code>$input</code>/<code>$json</code>/<code>$node</code>, <code>$helpers.httpRequest</code>, dates with <code>DateTime</code> and the choice between the node’s modes.</p><p class="mut"><em>The recommended approach for ~95% of cases.</em></p></div>
+<div class="card"><h3>🐍 n8n-code-python</h3><p>Python Code node (beta): <code>_input</code>/<code>_json</code>, what you can use from the standard library, and the real limitations compared to JS.</p><p class="mut"><em>Only when Python is actually necessary.</em></p></div>
+<div class="card"><h3>✅ n8n-validation-expert</h3><p>Interpret and resolve validation errors: error catalog, validation profiles, operator structure, and how to recognize false positives.</p><p class="mut"><em>Triggers when a <code>validate_*</code> complains.</em></p></div>
+<div class="card"><h3>🛠️ n8n-mcp-tools-expert</h3><p>Efficient use of the n8n-mcp MCP tools: node discovery, configuration validation, workflow management, and a library of ~2,700 real templates.</p><p class="mut"><em>Requires the n8n-mcp server to be connected.</em></p></div>
+<div class="card"><h3>📁 How they’re organized</h3><p>One folder per skill, with <code>SKILL.md</code> plus the attachments: <code>ERROR_CATALOG.md</code>, <code>COMMON_PATTERNS.md</code>, <code>DATA_ACCESS.md</code>, <code>FALSE_POSITIVES.md</code>, <code>DEPENDENCIES.md</code> and the like.</p></div>
+</div>
+</div></section>
+<section id="pre"><div class="wrap">
+<span class="chip">Prerequisites</span>
+<h2>What you need before you start</h2>
+<p class="sub">All you need to get started is Claude Code and the cloned repository. The MCP and n8n instance are optional — without them, you lose automatic publishing, not the knowledge.</p>
+<div class="grid g3">
+<div class="card"><h3>Claude Code</h3><p>The skills use the native project skills mechanism (<code>.claude/skills/</code>).</p><pre><span class="c"># installed version</span>
+<span class="k">claude --version</span></pre></div>
+<div class="card"><h3>The repository</h3><p>Clone the repo and open Claude Code from inside the folder—project skills apply only there.</p><pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/n8n-maker</span>
+<span class="k">cd</span> n8n-maker &amp;&amp; <span class="k">claude</span></pre></div>
+<div class="card"><h3>MCP n8n-mcp <span class="mut">(optional)</span></h3><p>Only needed for the skill <code>n8n-mcp-tools-expert</code> search for nodes and publish workflows.</p><pre><span class="c"># check the connected MCPs</span>
+<span class="k">claude mcp list</span></pre></div>
+</div>
+</div></section>
+<section id="guia"><div class="wrap">
+<span class="chip">User guide · step by step</span>
+<h2>From clone to first workflow</h2>
+<p class="sub">Real commands. The key is step 3: you describe what you want in Portuguese, and the skills come into play automatically.</p>
+<div class="step"><div class="b">1</div><div>
+<h3>Clone the repository</h3>
+<p>The skills travel with the repo—nothing else to install.</p>
+<pre><span class="k">git clone</span> <span class="s">https://github.com/inematds/n8n-maker</span>
+<span class="k">cd</span> n8n-maker</pre>
+</div></div>
+<div class="step"><div class="b">2</div><div>
+<h3>Open Claude Code inside the folder</h3>
+<p>Skills in <code>.claude/skills/</code> are project-specific: they only load when the session runs there.</p>
+<pre><span class="k">claude</span>  <span class="c"># from inside ~/projetos/n8n-maker</span>
+<span class="c"># check that these appeared: /skills → n8n-*</span></pre>
+</div></div>
+<div class="step"><div class="b">3</div><div>
+<h3>Ask for the workflow in Portuguese</h3>
+<p>Don't invoke any skills. Describe the goal; Claude will choose the pattern and build the structure.</p>
+<pre><span class="c"># example request</span>
+<span class="s">"monta um workflow que recebe um webhook,
+ valida o payload e grava no Postgres"</span>
+
+<span class="c"># → n8n-workflow-patterns uses the webhook pattern</span>
+<span class="c"># → n8n-node-configuration configures Webhook, IF, and Postgres</span></pre>
+</div></div>
+<div class="step"><div class="b">4</div><div>
+<h3>Refine expressions and Code nodes</h3>
+<p>When editing a dynamic field or Code node, the syntax and code skills take over.</p>
+<pre><span class="c"># expression in a node field</span>
+{{ $json.body.email }}
+
+<span class="c"># Code node (JavaScript)</span>
+<span class="k">const</span> items = $input.all();
+<span class="k">return</span> items.map(i =&gt; ({ json: { email: i.json.body.email } }));</pre>
+</div></div>
+<div class="step"><div class="b">5</div><div>
+<h3>Validate and fix in the loop</h3>
+<p>Wait 2–3 turns. The <code>n8n-validation-expert</code> translates the message, identifies the cause, and distinguishes a real error from a false positive.</p>
+<pre><span class="c"># typical request</span>
+<span class="s">"valida esse workflow e corrige o que aparecer"</span>
+
+<span class="c"># → real errors: fixed</span>
+<span class="c"># → false positives: explained and ignored</span></pre>
+</div></div>
+<div class="step"><div class="b">6</div><div>
+<h3>Publish to your instance <span class="mut">(optional)</span></h3>
+<p>With the n8n-mcp MCP connected, the <code>n8n-mcp-tools-expert</code> creates and updates the workflow directly in n8n.</p>
+<pre><span class="s">"sobe esse workflow na minha instância do n8n"</span></pre>
+</div></div>
+<div class="step"><div class="b">7</div><div>
+<h3>Want to use it in any project?</h3>
+<p>Symlink the folders to the global skills directory — that way, they stay versioned here.</p>
+<pre><span class="k">ln -s</span> ~/projetos/n8n-maker/skills/n8n-* ~/.claude/skills/</pre>
+</div></div>
+</div></section>
+<section id="exemplos"><div class="wrap">
+<span class="chip">Examples</span>
+<h2>Requests that trigger each skill</h2>
+<p class="sub">How routing works in practice—you speak naturally, and the right skill appears.</p>
+<div class="grid g2">
+<div class="card"><h3>“I receive a Stripe webhook and want to send a notification in Slack”</h3><p><strong>workflow-patterns</strong> (webhook pattern) → <strong>node-configuration</strong> (Webhook + Slack) → <strong>expression-syntax</strong> (build the message).</p></div>
+<div class="card"><h3>“This <code>$json</code> is coming through as undefined”</h3><p><strong>expression-syntax</strong> shows the correct way to access the item and the difference between <code>$json</code>, <code>$node</code> and webhook data.</p></div>
+<div class="card"><h3>“I need to call a paginated API inside a Code node”</h3><p><strong>code-javascript</strong> with <code>$helpers.httpRequest</code> and the pagination loop; <strong>workflow-patterns</strong> if it turns into its own workflow.</p></div>
+<div class="card"><h3>“The validation flagged the IF operator’s structure”</h3><p><strong>validation-expert</strong> looks it up in the error catalog, fixes the structure, and says whether it’s a false positive.</p></div>
+</div>
+</div></section>
+<section id="roadmap"><div class="wrap">
+<span class="chip">Roadmap</span>
+<h2>Where it is and where it's going</h2>
+<p class="sub">The repository grew out of skills that already ran in the global profile; the next step is to add executable examples and make installation easier.</p>
+<div class="phase"><div class="tag">Done</div><div class="d"><strong>The 7 versioned skills</strong><span>Came from <code>~/.claude/skills/</code> and became a project: content in <code>skills/</code>, symlinks in <code>.claude/skills/</code>, README, and this guide.</span></div></div>
+<div class="phase"><div class="tag">Next</div><div class="d"><strong>Example workflows</strong><span>Ready-made JSONs by default (webhook, API, database, AI agent, scheduled) to import directly into n8n and use as a starting point.</span></div></div>
+<div class="phase"><div class="tag">Next</div><div class="d"><strong>Install with one command</strong><span>Script that symlinks to the global profile and checks whether the n8n-mcp MCP is connected.</span></div></div>
+</div></section>
+<footer>
+<div class="wrap">
+<div class="pill">Claude Code Skills</div><div class="pill">n8n</div><div class="pill">MCP n8n-mcp</div><div class="pill">Markdown</div>
+<p style="margin-top:18px">n8n-maker · n8n skills for Claude Code ·
+      <a href="https://github.com/inematds/n8n-maker">inematds/n8n-maker</a> ·
+      <a href="https://inema.club">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+  (function(){
+    var KEY='n8n-maker-theme';
+    var b=document.body, t=document.getElementById('themeToggle');
+    if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); t.textContent='☀️'; }
+    t.addEventListener('click',function(){
+      var light=b.classList.toggle('light');
+      t.textContent=light?'☀️':'🌙';
+      localStorage.setItem(KEY, light?'light':'dark');
+    });
+  })();
+</script>
+</body>
+</html>

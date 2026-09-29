@@ -1,5 +1,7 @@
 # n8n-maker — Skills de n8n para Claude Code
 
+**🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
+
 Conjunto de **7 skills** que ensinam o Claude Code a construir, configurar, validar e
 depurar workflows do **n8n**. Ficam em `.claude/skills/` e carregam sozinhas quando o
 assunto aparece na conversa — não precisa invocar nada à mão.
